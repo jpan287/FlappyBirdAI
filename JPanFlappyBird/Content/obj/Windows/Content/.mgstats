@@ -1,0 +1,3 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"Z:/Johnny.Pan/Documents/JPanFlappyBird/JPanFlappyBird/Content/bottomPipe.png","Z:/Johnny.Pan/Documents/JPanFlappyBird/JPanFlappyBird/Content/bin/Windows/Content/bottomPipe.xnb","TextureProcessor","Texture2DContent",29544,365597,0.2182277
+"Z:/Johnny.Pan/Documents/JPanFlappyBird/JPanFlappyBird/Content/flappyBird.png","Z:/Johnny.Pan/Documents/JPanFlappyBird/JPanFlappyBird/Content/bin/Windows/Content/flappyBird.xnb","TextureProcessor","Texture2DContent",12655,7085,0.2277421

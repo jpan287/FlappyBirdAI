@@ -13,11 +13,11 @@ namespace JPanFlappyBird
     {
         KeyboardState ks = new KeyboardState();
         Texture2D texture;
-        Rectangle hitbox;
+        public Rectangle hitbox;
         Vector2 position;
-        static double gravitySpeed = 2.0;
-        static double jumpSpeed = 20.0;
-        double ySpeed;
+        static float gravitySpeed = 0.8f;
+        static float jumpSpeed = -10.0f;
+        float ySpeed;
         public bool dead = false;
 
         public Bird(Texture2D Texture, Vector2 Position)
@@ -29,6 +29,8 @@ namespace JPanFlappyBird
 
         public void Update(GameTime gametime, KeyboardState keystate)
         {
+            hitbox.X = (int)position.X;
+            hitbox.Y = (int)position.Y;
             this.ks = keystate;
             if (ks.IsKeyDown(Keys.Space))
             {
