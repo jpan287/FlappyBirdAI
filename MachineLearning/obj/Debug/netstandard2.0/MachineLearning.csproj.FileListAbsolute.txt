@@ -1,0 +1,9 @@
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\bin\Debug\netstandard2.0\MachineLearning.deps.json
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\bin\Debug\netstandard2.0\MachineLearning.dll
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\bin\Debug\netstandard2.0\MachineLearning.pdb
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\obj\Debug\netstandard2.0\MachineLearning.csprojAssemblyReference.cache
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\obj\Debug\netstandard2.0\MachineLearning.csproj.CoreCompileInputs.cache
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\obj\Debug\netstandard2.0\MachineLearning.AssemblyInfoInputs.cache
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\obj\Debug\netstandard2.0\MachineLearning.AssemblyInfo.cs
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\obj\Debug\netstandard2.0\MachineLearning.dll
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\MachineLearning\obj\Debug\netstandard2.0\MachineLearning.pdb

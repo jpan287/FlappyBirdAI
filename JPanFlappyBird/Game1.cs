@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MachineLearning;
 
 namespace JPanFlappyBird
 {
@@ -9,6 +10,7 @@ namespace JPanFlappyBird
     /// </summary>
     public class Game1 : Game
     {
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -68,20 +70,24 @@ namespace JPanFlappyBird
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || player.dead)
-                Exit();
-            player.Update(gameTime, Keyboard.GetState());
-            pipe1.Update(gameTime);
-            pipe2.Update(gameTime);
-            if (player.hitbox.Intersects(pipe1.bottomHitbox) || player.hitbox.Intersects(pipe1.topHitbox) ||
-                player.hitbox.Intersects(pipe2.bottomHitbox) || player.hitbox.Intersects(pipe2.topHitbox))
+            if (player.dead != true)
             {
-                player.dead = true;
+                player.Update(gameTime, Keyboard.GetState());
+                pipe1.Update(gameTime);
+                pipe2.Update(gameTime);
+                if (player.hitbox.Intersects(pipe1.bottomHitbox) || player.hitbox.Intersects(pipe1.topHitbox) ||
+                    player.hitbox.Intersects(pipe2.bottomHitbox) || player.hitbox.Intersects(pipe2.topHitbox))
+                {
+                    player.dead = true;
+                }
+            }
+            else
+            {
+                //restart here
             }
 
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
+
         }
 
         /// <summary>

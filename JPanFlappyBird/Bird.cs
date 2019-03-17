@@ -15,7 +15,7 @@ namespace JPanFlappyBird
         Texture2D texture;
         public Rectangle hitbox;
         Vector2 position;
-        static float gravitySpeed = 0.8f;
+        static float gravitySpeed = 0.75f;
         static float jumpSpeed = -10.0f;
         float ySpeed;
         public bool dead = false;
@@ -43,7 +43,7 @@ namespace JPanFlappyBird
 
             position.Y += (float)ySpeed;
             
-            if (position.Y > 800)
+            if (position.Y > 800 || position.Y < -50)
             {
                 dead = true;
             }

@@ -14,17 +14,18 @@ namespace JPanFlappyBird
         public Rectangle topHitbox;
         public Rectangle bottomHitbox;
         Random rand;
-        int heightOfHole;
+        int height;
         int xSpeed = 5;
+        int points = 0;
 
         public Pipe(Texture2D Texture)
         {
             texture = Texture;
             rand = new Random();
-            heightOfHole = rand.Next(100, 700);
+            height = rand.Next(-650, -300);
 
-            topHitbox = new Rectangle(1200, rand.Next(0, heightOfHole), texture.Width, texture.Height);
-            bottomHitbox = new Rectangle(1200, rand.Next(heightOfHole + 150, 800), texture.Width, texture.Height);
+            topHitbox = new Rectangle(1200, height, texture.Width, texture.Height);
+            bottomHitbox = new Rectangle(1200, height + texture.Height + 200, texture.Width, texture.Height);
         }
 
         public void Update(GameTime gametime)
@@ -33,16 +34,17 @@ namespace JPanFlappyBird
             topHitbox.X -= xSpeed;
             if (bottomHitbox.X < 0)
             {
-                heightOfHole = rand.Next(100, 600);
+                height = rand.Next(-650, -300);
 
-                topHitbox = new Rectangle(1200, rand.Next(0, heightOfHole), texture.Width, texture.Height);
-                bottomHitbox = new Rectangle(1200, rand.Next(heightOfHole + 150, 800), texture.Width, texture.Height);
+                topHitbox = new Rectangle(1200, height, texture.Width, texture.Height);
+                bottomHitbox = new Rectangle(1200, height + texture.Height + 200, texture.Width, texture.Height);
+                points++;
             }
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, destinationRectangle: topHitbox, color: Color.White, effects: SpriteEffects.FlipVertically);
+            spritebatch.Draw(texture, topHitbox, null, Color.White,0, Vector2.Zero, SpriteEffects.FlipVertically, 0);
             spritebatch.Draw(texture, bottomHitbox, Color.White);
         }
     }
