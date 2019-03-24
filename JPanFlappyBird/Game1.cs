@@ -49,8 +49,8 @@ namespace JPanFlappyBird
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player = new Bird(Content.Load<Texture2D>("flappyBird"), new Vector2(400, 400));
-            pipe1 = new Pipe(Content.Load<Texture2D>("bottomPipe"));
-            pipe2 = new Pipe(Content.Load<Texture2D>("bottomPipe"));
+            pipe1 = new Pipe(Content.Load<Texture2D>("bottomPipe"), 1200);
+            pipe2 = new Pipe(Content.Load<Texture2D>("bottomPipe"), 1600);
             // TODO: use this.Content to load your game content here
         }
 
@@ -70,13 +70,15 @@ namespace JPanFlappyBird
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            player.xToPipe = pipe1.topHitbox.X - player.hitbox.X;
+            player.yToPipe = pipe1.bottomHitbox.Y - player.hitbox.Y;
             if (player.dead != true)
             {
                 player.Update(gameTime, Keyboard.GetState());
                 pipe1.Update(gameTime);
-                pipe2.Update(gameTime);
-                if (player.hitbox.Intersects(pipe1.bottomHitbox) || player.hitbox.Intersects(pipe1.topHitbox) ||
-                    player.hitbox.Intersects(pipe2.bottomHitbox) || player.hitbox.Intersects(pipe2.topHitbox))
+                //pipe2.Update(gameTime);
+                if (player.hitbox.Intersects(pipe1.bottomHitbox) || player.hitbox.Intersects(pipe1.topHitbox)) //||
+                                                                                                               //player.hitbox.Intersects(pipe2.bottomHitbox) || player.hitbox.Intersects(pipe2.topHitbox))
                 {
                     player.dead = true;
                 }
@@ -100,7 +102,7 @@ namespace JPanFlappyBird
             spriteBatch.Begin();
             player.Draw(spriteBatch);
             pipe1.Draw(spriteBatch);
-            pipe2.Draw(spriteBatch);
+            //pipe2.Draw(spriteBatch);
             spriteBatch.End();
 
             // TODO: Add your drawing code here
