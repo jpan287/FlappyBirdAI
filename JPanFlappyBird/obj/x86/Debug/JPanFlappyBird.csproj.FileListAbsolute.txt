@@ -26,3 +26,5 @@
 \\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\JPanFlappyBird\obj\x86\Debug\JPanFlappyBird.csproj.CopyComplete
 \\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\JPanFlappyBird\obj\x86\Debug\JPanFlappyBird.exe
 \\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\JPanFlappyBird\obj\x86\Debug\JPanFlappyBird.pdb
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\JPanFlappyBird\bin\Windows\x86\Debug\System.ValueTuple.dll
+\\GMRDC1\Folder Redirection\Johnny.Pan\Documents\JPanFlappyBird\JPanFlappyBird\bin\Windows\x86\Debug\System.ValueTuple.xml

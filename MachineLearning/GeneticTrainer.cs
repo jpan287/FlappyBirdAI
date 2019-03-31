@@ -73,8 +73,8 @@ namespace MachineLearning
 
                 for (int j = (flip ? 0 : cutPoint); j < (flip ? cutPoint : winLayer.Neurons.Length); j++)
                 {
-                    Neuron winNeuron = winLayer.Neurons[i];
-                    Neuron childNeuron = childLayer.Neurons[i];
+                    Neuron winNeuron = winLayer.Neurons[j];
+                    Neuron childNeuron = childLayer.Neurons[j];
 
                     winNeuron.Weights.CopyTo(childNeuron.Weights, 0);
                     childNeuron.Bias = winNeuron.Bias;
