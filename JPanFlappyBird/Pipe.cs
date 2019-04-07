@@ -31,13 +31,6 @@ namespace JPanFlappyBird
         {
             bottomHitbox.X -= xSpeed;
             topHitbox.X -= xSpeed;
-            if (bottomHitbox.X < 0)
-            {
-                height = rand.Next(-650, -300);
-
-                topHitbox = new Rectangle(1200, height, texture.Width, texture.Height);
-                bottomHitbox = new Rectangle(1200, height + texture.Height + 200, texture.Width, texture.Height);
-            }
         }
 
         public void Draw(SpriteBatch spritebatch)

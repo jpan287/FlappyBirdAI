@@ -14,9 +14,9 @@ namespace JPanFlappyBird
         KeyboardState ks = new KeyboardState();
         Texture2D texture;
         public Rectangle hitbox;
-        Vector2 position;
+        public Vector2 position;
         static float gravitySpeed = 0.75f;
-        static float jumpSpeed = -10.0f;
+        static float jumpSpeed = -9.8f;
         float ySpeed;
         public double fitness;
         public bool dead = false;
@@ -41,12 +41,13 @@ namespace JPanFlappyBird
             if (jump)
             {
                 ySpeed = jumpSpeed;
+                jump = false;                
             }
             else
             {
                 ySpeed += gravitySpeed;
             }
-            position.Y += (float)ySpeed;
+            position.Y += ySpeed;
             
             if (position.Y > 800 || position.Y < -50)
             {
@@ -61,7 +62,7 @@ namespace JPanFlappyBird
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, hitbox, Color.White);
+            spritebatch.Draw(texture, position, Color.White);
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MachineLearning;
 using System;
+using System.Collections.Generic;
 
 namespace JPanFlappyBird
 {
@@ -16,17 +17,17 @@ namespace JPanFlappyBird
         SpriteBatch spriteBatch;
 
         //Bird player;
-        Bird[] birds = new Bird[100];
-        Pipe pipe1;
-        Pipe pipe2;
+        Bird[] birds = new Bird[500];
+        List<Pipe> pipes = new List<Pipe>();
+
+        TimeSpan SpawnPipeTime = TimeSpan.FromMilliseconds(1200);
+        TimeSpan elapsedSpawnPipeTime;
 
         Random rand;
-
-        double[][] inputs = new double[100][];
-
+        
         MachineLearning.GeneticTrainer trainer = new MachineLearning.GeneticTrainer();
-        MachineLearning.Network[] networks = new MachineLearning.Network[100]; //(a => 1 / (1 + Math.Exp(-a)), 1, 3, 3, 1);
-        (Network, double)[] population = new (Network, double)[100];
+        MachineLearning.Network[] networks = new MachineLearning.Network[500]; //(a => 1 / (1 + Math.Exp(-a)), 1, 3, 3, 1);
+        (Network, double)[] population = new (Network, double)[500];
     
         bool playing
         {
@@ -38,6 +39,7 @@ namespace JPanFlappyBird
                     if (birds[i].dead == false)
                     {
                         temp = true;
+                        break;
                     }
                 }
                 return temp;
@@ -79,13 +81,11 @@ namespace JPanFlappyBird
             for (int i = 0; i < networks.Length; i++)
             {
                 birds[i] = new Bird(Content.Load<Texture2D>("flappyBird"), new Vector2(400, 400));
-                inputs[i] = new double[] { birds[i].xToPipe, birds[i].yToPipe };
                 networks[i] = new MachineLearning.Network(a => a < 0 ? 0 : 1, 2, 4, 1);
                 networks[i].Randomize(rand);
                 population[i] = (networks[i], birds[i].fitness);
             }
-            pipe1 = new Pipe(Content.Load<Texture2D>("bottomPipe"), 1200);
-            pipe2 = new Pipe(Content.Load<Texture2D>("bottomPipe"), 1600);
+            pipes.Add(new Pipe(Content.Load<Texture2D>("bottomPipe"), GraphicsDevice.Viewport.Width));
             // TODO: use this.Content to load your game content here
         }
 
@@ -105,30 +105,65 @@ namespace JPanFlappyBird
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            pipe1.Update(gameTime);
-            while (playing)
+            for (int i = 0; i < pipes.Count; i++)
             {
+                pipes[i].Update(gameTime);
+            }
+            if (playing)
+            {
+                for (int i = 0; i < pipes.Count; i++)
+                {
+                    if (pipes[i].bottomHitbox.X < 0)
+                    {
+                        pipes.RemoveAt(i);
+                    }
+                }
+
+                elapsedSpawnPipeTime += gameTime.ElapsedGameTime;
+
+                if (elapsedSpawnPipeTime >= SpawnPipeTime)
+                {
+                    elapsedSpawnPipeTime = TimeSpan.Zero;
+                    pipes.Add(new Pipe(Content.Load<Texture2D>("bottomPipe"), GraphicsDevice.Viewport.Width));
+                }
                 for (int i = 0; i < birds.Length; i++)
                 {
-                    birds[i].xToPipe = pipe1.topHitbox.X - birds[i].hitbox.X;
-                    birds[i].yToPipe = pipe1.bottomHitbox.Y - birds[i].hitbox.Y;
-                    if (birds[i].dead != true)
+                    if (!birds[i].dead)
                     {
-                        networks[i].Compute(inputs[i]);
-                        birds[i].Update(gameTime, Keyboard.GetState());
+                        birds[i].xToPipe = pipes[0].topHitbox.X + pipes[0].bottomHitbox.Width / 2 - birds[i].hitbox.X;
+                        birds[i].yToPipe = pipes[0].bottomHitbox.Y + 100 - birds[i].hitbox.Y;                        
+
+                        networks[i].Compute(new double[] { birds[i].xToPipe, birds[i].yToPipe });
+                        
                         if (networks[i].Outputs[0] == 1)
                         {
                             birds[i].jump = true;
                         }
-                        if (birds[i].hitbox.Intersects(pipe1.bottomHitbox) || birds[i].hitbox.Intersects(pipe1.topHitbox))
+                        if (birds[i].hitbox.Intersects(pipes[0].bottomHitbox) || birds[i].hitbox.Intersects(pipes[0].topHitbox))
                         {
                             birds[i].dead = true;
                         }
+
+                        birds[i].Update(gameTime, Keyboard.GetState());
                     }
                 }
-                trainer.Train(population, rand, 0.5);
-                base.Update(gameTime);
             }
+            else
+            {
+                trainer.Train(population, rand, 0.25);
+                
+                for (int i = 0; i < birds.Length; i++)
+                {
+                    birds[i].position.Y = 400;
+                    birds[i].dead = false;
+                    birds[i].fitness = 0;
+                }
+                pipes.Clear();
+                pipes.Add(new Pipe(Content.Load<Texture2D>("bottomPipe"), GraphicsDevice.Viewport.Width));
+                elapsedSpawnPipeTime = TimeSpan.Zero;
+            }
+
+            base.Update(gameTime);
         }
 
         /// <summary>
@@ -144,7 +179,10 @@ namespace JPanFlappyBird
                 birds[i].Draw(spriteBatch);
             }
             //player.Draw(spriteBatch);
-            pipe1.Draw(spriteBatch);
+            for (int i = 0; i < pipes.Count; i++)
+            {
+                pipes[i].Draw(spriteBatch);
+            }
             //pipe2.Draw(spriteBatch);
             spriteBatch.End();
 
