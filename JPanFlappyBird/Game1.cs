@@ -20,7 +20,7 @@ namespace JPanFlappyBird
         Bird[] birds = new Bird[500];
         List<Pipe> pipes = new List<Pipe>();
 
-        TimeSpan SpawnPipeTime = TimeSpan.FromMilliseconds(1200);
+        TimeSpan SpawnPipeTime = TimeSpan.FromMilliseconds(700);
         TimeSpan elapsedSpawnPipeTime;
 
         Random rand;
@@ -80,7 +80,7 @@ namespace JPanFlappyBird
             //player = new Bird(Content.Load<Texture2D>("flappyBird"), new Vector2(400, 400));
             for (int i = 0; i < networks.Length; i++)
             {
-                birds[i] = new Bird(Content.Load<Texture2D>("flappyBird"), new Vector2(400, 400));
+                birds[i] = new Bird(Content.Load<Texture2D>("flappyBird"), new Vector2(100, 400));
                 networks[i] = new MachineLearning.Network(a => a < 0 ? 0 : 1, 2, 4, 1);
                 networks[i].Randomize(rand);
                 population[i] = (networks[i], birds[i].fitness);
@@ -130,8 +130,8 @@ namespace JPanFlappyBird
                 {
                     if (!birds[i].dead)
                     {
-                        birds[i].xToPipe = pipes[0].topHitbox.X + pipes[0].bottomHitbox.Width / 2 - birds[i].hitbox.X;
-                        birds[i].yToPipe = pipes[0].bottomHitbox.Y + 100 - birds[i].hitbox.Y;                        
+                        birds[i].xToPipe = pipes[0].position.X + (pipes[0].bottomHitbox.Width / 2) - birds[i].position.X;
+                        birds[i].yToPipe = pipes[0].position.Y - birds[i].position.Y;
 
                         networks[i].Compute(new double[] { birds[i].xToPipe, birds[i].yToPipe });
                         
@@ -176,7 +176,10 @@ namespace JPanFlappyBird
             spriteBatch.Begin();
             for (int i = 0; i < birds.Length; i++)
             {
-                birds[i].Draw(spriteBatch);
+                if (birds[i].dead != true)
+                {
+                    birds[i].Draw(spriteBatch);
+                }
             }
             //player.Draw(spriteBatch);
             for (int i = 0; i < pipes.Count; i++)

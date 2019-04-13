@@ -23,6 +23,10 @@ namespace MachineLearning
                 Crossover(population[random.Next(start)].net, population[i].net, random);
                 Mutate(population[i].net, random, mutationRate);
             }
+            for (int i = end; i < population.Length; i++)
+            {
+                population[i].net.Randomize(random);
+            }
         }
 
         public void Mutate(Network net, Random random, double mutationRate)
@@ -71,7 +75,7 @@ namespace MachineLearning
                 int cutPoint = random.Next(winLayer.Neurons.Length);
                 bool flip = random.Next(2) == 0;
 
-                for (int j = (flip ? 0 : cutPoint); j < (flip ? 0 : winLayer.Neurons.Length); j++)
+                for (int j = (flip ? 0 : cutPoint); j < (flip ? cutPoint : winLayer.Neurons.Length); j++)
                 {
                     Neuron winNeuron = winLayer.Neurons[j];
                     Neuron childNeuron = childLayer.Neurons[j];

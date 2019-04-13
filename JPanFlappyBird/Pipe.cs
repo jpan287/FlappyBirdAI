@@ -13,24 +13,28 @@ namespace JPanFlappyBird
         Texture2D texture;
         public Rectangle topHitbox;
         public Rectangle bottomHitbox;
+        public Vector2 position;
         Random rand;
         int height;
-        int xSpeed = 5;
+        int xSpeed = 7;
 
         public Pipe(Texture2D Texture, int initialX)
         {
             texture = Texture;
             rand = new Random();
             height = rand.Next(-650, -300);
+            position.X = initialX;
+            position.Y = height + texture.Height + 100;
 
-            topHitbox = new Rectangle(initialX, height, texture.Width, texture.Height);
-            bottomHitbox = new Rectangle(initialX, height + texture.Height + 200, texture.Width, texture.Height);
+            topHitbox = new Rectangle((int)position.X, height, texture.Width, texture.Height);
+            bottomHitbox = new Rectangle((int)position.X, height + texture.Height + 200, texture.Width, texture.Height);
         }
 
         public void Update(GameTime gametime)
         {
-            bottomHitbox.X -= xSpeed;
-            topHitbox.X -= xSpeed;
+            bottomHitbox.X = (int)position.X;
+            topHitbox.X = (int)position.X;
+            position.X -= xSpeed;
         }
 
         public void Draw(SpriteBatch spritebatch)
